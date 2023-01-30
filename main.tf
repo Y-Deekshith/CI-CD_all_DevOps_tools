@@ -1,20 +1,21 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-south-1"
 }
 
 terraform {
-required_version = "~> 2.0.0"
+  required_version = "<= 2.0"
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.0"
+      version = "<= 5.0.0"
     }
   }
 }
 
 terraform {
   backend "s3" {
-    bucket = "dees3devops"
-    key    = "dees3devops/terraformmodules.tfstate"
+    bucket = "deemumbais3"
+    key    = "deemumbais3/terraformmodules.tfstate"
+    region = "ap-south-1"
   }
 }
