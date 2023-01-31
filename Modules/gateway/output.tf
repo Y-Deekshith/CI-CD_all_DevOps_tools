@@ -9,3 +9,4 @@ output "natgw_id" {
 output "elastic_ip" {
   value = aws_eip.elasticip.id
 }
+
