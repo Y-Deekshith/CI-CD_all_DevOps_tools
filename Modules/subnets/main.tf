@@ -21,3 +21,14 @@ resource "aws_subnet" "private_subnets" {
     Env  = "${var.env}-env"
   }
 }
+
+resource "aws_route_table_association" "publicroute" {
+  count          = length(var.public_cidr_block)
+  subnet_id      = element(aws_subnet.public_subnets.*.id, count.index)
+  route_table_id = var.igw_id
+}
+resource "aws_route_table_association" "privateroute" {
+  count          = length(var.private_cidr_block)
+  subnet_id      = element(aws_subnet.private_subnets.*.id, count.index)
+  route_table_id = var.ngw_id
+}

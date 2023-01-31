@@ -8,3 +8,11 @@ output "public_subnet_1" {
 output "private_subnet_id" {
   value = aws_subnet.private_subnets.*.id
 }
+
+output "public_subnet_cidr" {
+  value = aws_subnet.public_subnets.*.cidr_block
+}
+
+output "private_subnet_cidr" {
+  value = aws_subnet.private_subnets.*.cidr_block
+}
