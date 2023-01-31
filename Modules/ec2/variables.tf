@@ -1,0 +1,9 @@
+variable "instancetype" {}
+variable "ami" {}
+variable "key_name" {}
+variable "name" {}
+variable "publicsubnet_id" {}
+variable "security_group" {}
+variable "env" {}
+variable "privatesubnet_id" {}
+variable "private_ec2_depends_on_nat" {}

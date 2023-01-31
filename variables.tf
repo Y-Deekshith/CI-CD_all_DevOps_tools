@@ -6,4 +6,6 @@ variable "subnet_azs" {}
 variable "public_cidrs" {}
 variable "private_cidrs" {}
 variable "sg_cidr_blocks" {}
-# variable "vpc_env" {}
+variable "instance_type" {}
+variable "ami" {}
+variable "key_name" {}

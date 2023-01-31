@@ -37,4 +37,15 @@ module "security_infra" {
   name           = var.vpc_name
   vpc_id         = module.vpc_infra.vpc_id
 }
-
+module "ec2_infra" {
+  source                     = "./Modules/ec2"
+  instancetype               = var.instance_type
+  ami                        = var.ami
+  key_name                   = var.key_name
+  name                       = var.vpc_name
+  publicsubnet_id            = module.subnets_infra.public_subnet_id
+  security_group             = module.security_infra.security_group
+  env                        = var.vpc_env
+  privatesubnet_id           = module.subnets_infra.private_subnet_id
+  private_ec2_depends_on_nat = module.gateway_infra.natgw_id
+}
