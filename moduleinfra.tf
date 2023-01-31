@@ -14,8 +14,8 @@ module "subnets_infra" {
   private_cidr_block = var.private_cidrs
   name               = var.vpc_name
   env                = var.vpc_env
-  mrtb = module.routing_infra.mrtb_route_table
-  crtb = module.routing_infra.crtb_route_table
+  mrtb               = module.routing_infra.mrtb_route_table
+  crtb               = module.routing_infra.crtb_route_table
 }
 
 module "gateway_infra" {
@@ -58,4 +58,15 @@ module "alb_infra" {
   env                     = var.vpc_env
   vpc_id                  = module.vpc_infra.vpc_id
   instance                = module.ec2_infra.instance
+}
+
+module "asg_infra" {
+  source         = "./Modules/asg"
+  name           = var.vpc_name
+  ami            = var.ami
+  instance_type  = var.instance_type
+  key_name       = var.key_name
+  sg_ids         = [module.security_infra.security_group]
+  alb            = [module.alb_infra.tgarn]
+  public_subnets = module.subnets_infra.public_subnet_id
 }
