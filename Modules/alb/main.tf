@@ -9,6 +9,9 @@ resource "aws_lb" "myalb" {
     Name = "${var.name}-alb"
     Env  = "${var.env}-env"
   }
+  depends_on = [
+    aws_lb_target_group_attachment.ec2_attach
+  ]
 }
 
 resource "aws_lb_target_group" "alb_tg" {

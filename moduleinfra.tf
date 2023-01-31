@@ -14,8 +14,8 @@ module "subnets_infra" {
   private_cidr_block = var.private_cidrs
   name               = var.vpc_name
   env                = var.vpc_env
-  igw_id             = module.gateway_infra.igw_id
-  ngw_id             = module.gateway_infra.natgw_id
+  mrtb = module.routing_infra.mrtb_route_table
+  crtb = module.routing_infra.crtb_route_table
 }
 
 module "gateway_infra" {

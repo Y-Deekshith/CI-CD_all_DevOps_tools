@@ -5,7 +5,7 @@ resource "aws_subnet" "public_subnets" {
   availability_zone = element(var.azs, count.index)
 
   tags = {
-    Name = "${var.name}-subnet${count.index + 1}"
+    Name = "${var.name}-publicsubnet${count.index + 1}"
     Env  = "${var.env}-env"
   }
 }
@@ -17,7 +17,7 @@ resource "aws_subnet" "private_subnets" {
   availability_zone = element(var.azs, count.index)
 
   tags = {
-    Name = "${var.name}-subnet${count.index + 1}"
+    Name = "${var.name}-privatesubnet${count.index + 1}"
     Env  = "${var.env}-env"
   }
 }
@@ -25,10 +25,10 @@ resource "aws_subnet" "private_subnets" {
 resource "aws_route_table_association" "publicroute" {
   count          = length(var.public_cidr_block)
   subnet_id      = element(aws_subnet.public_subnets.*.id, count.index)
-  route_table_id = var.igw_id
+  route_table_id = var.mrtb
 }
 resource "aws_route_table_association" "privateroute" {
   count          = length(var.private_cidr_block)
   subnet_id      = element(aws_subnet.private_subnets.*.id, count.index)
-  route_table_id = var.ngw_id
+  route_table_id = var.crtb
 }
