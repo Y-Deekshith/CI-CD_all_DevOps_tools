@@ -1,0 +1,47 @@
+{
+  "variables": {
+    "region": "",
+    "source_ami": "",
+    "instance_type": "",
+    "vpc_id": "",
+    "subnet_id": ""
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "{{user `region`}}",
+      "source_ami": "{{user `source_ami`}}",
+      "instance_type": "{{user `instance_type`}}",
+      "ssh_username": "ubuntu",
+      "ami_name": "Packer-Build-{{timestamp}}",
+      "vpc_id": "{{user `vpc_id`}}",
+      "subnet_id": "{{user `subnet_id`}}",
+      "tags": {
+        "Name": "Packer-Build-{{timestamp}}"
+      }
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sleep 30",
+        "sudo apt update -y",
+        "sudo apt install nginx -y",
+        "sudo apt install git -y",
+        "sudo git clone -b publicserverpages https://github.com/Y-Deekshith/Terraform_multiple_modules.git deekshith",
+        "cd deekshith",
+        "sudo cp index.html /var/www/html/index.nginx-debian.html",
+        "sudo rm index.html",
+        "sudo mv * /var/www/html/",
+        "sudo service nginx start",
+        "sudo systemctl enable nginx"
+      ]
+    }
+  ]
+}
+
+
+// .\packer.exe build --var-file packer-vars.json packer.json
+// .\packer.exe inspect --var-file packer-vars.json packer.json
+// .\packer.exe validate --var-file packer-vars.json packer.json
