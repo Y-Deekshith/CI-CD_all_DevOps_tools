@@ -15,3 +15,11 @@ module "subnets_infra" {
   name               = module.vpc_infra.vpc_name
   env                = module.vpc_infra.vpc_env
 }
+
+module "gateway_infra" {
+  source  = "./Modules/gateway"
+  name  = module.vpc_infra.vpc_name
+  vpc_id  = module.vpc_infra.vpc_id
+  publicsubnet_1  = module.subnets_infra.public_subnet_1
+}
+
