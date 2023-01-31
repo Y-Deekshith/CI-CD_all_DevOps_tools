@@ -5,5 +5,5 @@ variable "vpc_env" {}
 variable "subnet_azs" {}
 variable "public_cidrs" {}
 variable "private_cidrs" {}
-# variable "vpc_env" {}
+variable "sg_cidr_blocks" {}
 # variable "vpc_env" {}
