@@ -6,8 +6,8 @@ resource "aws_lb" "myalb" {
   subnets                    = var.publicsubnet_cidr_block
   enable_deletion_protection = false
   tags = {
-    Name        = var.name
-    Environment = var.env
+    Name = "${var.name}-alb"
+    Env  = "${var.env}-env"
   }
 }
 
@@ -38,7 +38,7 @@ resource "aws_lb_listener" "alb_listner" {
 }
 
 resource "aws_lb_target_group_attachment" "ec2_attach" {
-  count = length(var.instance)
+  count            = length(var.instance)
   target_group_arn = aws_lb_target_group.alb_tg.arn
   target_id        = element(var.instance, count.index)
 }

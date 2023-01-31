@@ -49,3 +49,13 @@ module "ec2_infra" {
   privatesubnet_id           = module.subnets_infra.private_subnet_id
   private_ec2_depends_on_nat = module.gateway_infra.natgw_id
 }
+
+module "alb_infra" {
+  source                  = "./Modules/alb"
+  security_groups         = module.security_infra.security_group
+  publicsubnet_cidr_block = module.subnets_infra.public_subnet_id
+  name                    = var.vpc_name
+  env                     = var.vpc_env
+  vpc_id                  = module.vpc_infra.vpc_id
+  instance                = module.ec2_infra.instance
+}
